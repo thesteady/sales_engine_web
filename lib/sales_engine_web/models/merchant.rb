@@ -17,11 +17,26 @@ module SalesEngineWeb
       merchants.find{|m| m.id == id.to_i}
     end
 
+    def self.find_by_name(name)
+      merchants.find{|m| m.name.downcase == name.downcase}
+    end
+
     def to_json
       {:id => id, :name => name}.to_json
     end
 
-  private
+    def self.random_sequence=(input)
+      @random_sequence = input
+    end
+
+    def self.random_sequence
+      @random_sequence || []
+    end
+
+    def self.random
+      merchants.sample
+    end
+
     def self.merchants
       @merchants ||= []
     end

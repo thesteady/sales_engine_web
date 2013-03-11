@@ -18,5 +18,28 @@ module SalesEngineWeb
         expect( found.name ).to eq target.name
       end
     end
+
+    describe '.find_by_name' do
+      it "finds a merchant by name" do
+        target = Merchant.create(:id => 12, :name => "Jumpstart Lab")
+        found  = Merchant.find_by_name("Jumpstart Lab")
+        expect( found.id ).to eq target.id
+        expect( found.name ).to eq target.name
+      end
+
+      it "finds by name, case insensitive" do
+        target = Merchant.create(:id => 12, :name => "Jumpstart Lab")
+        found  = Merchant.find_by_name("jumpstart lab")
+        expect( found.id ).to eq target.id
+        expect( found.name ).to eq target.name
+      end
+    end
+
+    describe ".random" do
+      it "returns a merchant" do
+        Merchant.create(:id => 12, :name => "Jumpstart Lab")
+        expect( Merchant.random ).to be_kind_of(Merchant)
+      end
+    end
   end
 end
