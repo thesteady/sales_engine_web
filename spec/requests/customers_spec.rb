@@ -7,10 +7,22 @@ describe "/customers/" do
     SalesEngineWeb::Server
   end
 
+  before(:each) do
+    customer1 && customer2
+  end
+
+  let(:customer1) {SalesEngineWeb::Customer.create(:first_name => 'Jerry', :last_name => 'Seinfeld')}
+  let(:customer2) {SalesEngineWeb::Customer.create(:first_name => 'Meryl', :last_name => 'Streep')}
+  let(:customer3) {SalesEngineWeb::Customer.create(:first_name => 'Whoopi', :last_name => 'Goldberg')}
+  let(:customer4) {SalesEngineWeb::Customer.create(:first_name => 'Jerry', :last_name => 'Springer')}
+
   describe '/customers/find' do
     context 'given a customer id' do
       it 'returns the customer instance with that id' do
-        pending
+        get "/customers/find?id=#{customer1.id}"
+        output = JSON.parse(last_response.body)
+        expect(output['id']).to eq customer1.id
+        expect(output['first_name']).to eq customer1.first_name
       end
     end
     context 'given a customer first name' do

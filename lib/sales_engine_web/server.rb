@@ -1,5 +1,7 @@
 module SalesEngineWeb
   class Server < Sinatra::Base
+
+################### MERCHANTS ##################
     get '/merchants/find' do
       status 200
       if params[:id]
@@ -21,6 +23,7 @@ module SalesEngineWeb
       Merchant.random.to_json
     end
 
+########### INVOICES #######################
     get '/invoices/find' do
       if params[:id]
         invoice = Invoice.find(params[:id])
@@ -44,6 +47,12 @@ module SalesEngineWeb
     get '/invoices/random' do
       invoice = Invoice.random
       body invoice.to_json
+    end
+
+############## CUSTOMERS ##############
+    get '/customers/find' do
+      customer = Customer.find(params[:id])
+      body customer.to_json
     end
   end
 end

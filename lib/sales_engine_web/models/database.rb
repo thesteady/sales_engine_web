@@ -17,7 +17,6 @@ module SalesEngineWeb
       unless tables.include?(:merchants)
         build_merchants_table
       end
-
       database[:merchants]
     end
 
@@ -26,6 +25,13 @@ module SalesEngineWeb
         build_invoices_table
       end
       database[:invoices]
+    end
+
+    def self.customers
+      unless tables.include?(:customers)
+        build_customers_table
+      end
+      database[:customers]
     end
 
     def self.tables
@@ -40,6 +46,11 @@ module SalesEngineWeb
     def self.build_invoices_table
       database.
       tables << :invoices
+    end
+
+    def self.build_customers_table
+      database.
+      tables << :customers
     end
 
     def self.environment=(input)
