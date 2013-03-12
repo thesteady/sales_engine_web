@@ -20,5 +20,10 @@ module SalesEngineWeb
     get '/merchants/random' do
       Merchant.random.to_json
     end
+
+    get '/invoices/find' do
+      invoice = Invoice.find(params[:id])
+      body invoice.to_json
+    end
   end
 end

@@ -43,14 +43,7 @@ module SalesEngineWeb
 
     def self.find_all_by_name(name)
       results = merchants.where(Sequel.ilike(:name, "%#{name}%")).to_a
-      #returns an array of hashes
-      # puts "results of database search"
-      # puts results.inspect
-      collection = results.collect {|result| new(result)}
-      #returns an array of objects
-      # puts "collection of merchants: #{results.inspect}"
-      # puts collection.inspect
-      # collection
+      results.collect {|result| new(result)}
     end
 
     def to_json(state = nil)

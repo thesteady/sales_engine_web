@@ -7,10 +7,24 @@ describe "/invoices/" do
     SalesEngineWeb::Server
   end
 
-  describe '/invoices/find' do
+  # id,customer_id,merchant_id,status,created_at,updated_at
+
+  before (:each) do
+  invoice1 && invoice2
+  end
+
+  let(:invoice1) {SalesEngineWeb::Invoice.create(customer_id: 12, merchant_id: 2)}
+  let(:invoice2) {SalesEngineWeb::Invoice.create(customer_id: 1, merchant_id: 3)}
+
+  describe 'find' do
     context "given an id" do
       it "returns the invoice associated with the id" do
+        get "/invoices/find?id=#{invoice1.id}"
         pending
+        output = JSON.parse(last_response.body)
+        expect( output['id'] ).to eq invoice1.id
+        # expect( output['name'] ).to eq invoice1.name
+        # expect( [ invoice1.id, invoice2.id ] ).to include( output['id'] )
       end
     end
 
