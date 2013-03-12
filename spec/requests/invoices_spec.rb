@@ -20,23 +20,28 @@ describe "/invoices/" do
     context "given an id" do
       it "returns the invoice associated with the id" do
         get "/invoices/find?id=#{invoice1.id}"
-        pending
         output = JSON.parse(last_response.body)
         expect( output['id'] ).to eq invoice1.id
-        # expect( output['name'] ).to eq invoice1.name
-        # expect( [ invoice1.id, invoice2.id ] ).to include( output['id'] )
+        expect( output['customer_id'] ).to eq invoice1.customer_id
+        expect( [ invoice1.id, invoice2.id ] ).to include( output['id'] )
       end
     end
 
     context "given a customer id" do
       it "returns an invoice associated with the customer id" do
-        pending
+        get "/invoices/find?customer_id=#{invoice1.customer_id}"
+        output = JSON.parse(last_response.body)
+        expect( output['id'] ).to eq invoice1.id
+        expect( output['customer_id'] ).to eq invoice1.customer_id
       end
     end
 
     context "given a merchant_id" do
       it "returns an invoice associated with the merchant id" do
-        pending
+        get "/invoices/find?merchant_id=#{invoice1.merchant_id}"
+        output = JSON.parse(last_response.body)
+        expect( output['id']).to eq invoice1.id
+        expect( output['merchant_id']).to eq invoice1.merchant_id
       end
     end
 

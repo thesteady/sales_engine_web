@@ -22,7 +22,13 @@ module SalesEngineWeb
     end
 
     get '/invoices/find' do
-      invoice = Invoice.find(params[:id])
+      if params[:id]
+        invoice = Invoice.find(params[:id])
+      elsif params[:customer_id]
+        invoice = Invoice.find_by_customer_id(params[:customer_id])
+      else #params[:merchant_id]
+        invoice = Invoice.find_by_merchant_id(params[:merchant_id])
+      end
       body invoice.to_json
     end
   end

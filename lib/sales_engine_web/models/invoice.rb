@@ -34,10 +34,21 @@ module SalesEngineWeb
        # @invoices ||= []
     end
 
-    def self.find(params)
-      result = invoices.limit(1).where(:id => params[:id]).first
+    def self.find(id)
+      result = invoices.limit(1).where(:id => id.to_i).first
       new(result) if result
     end
+
+    def self.find_by_customer_id(customer_id)
+      result = invoices.limit(1).where(:customer_id => customer_id.to_i).first
+      new(result) if result
+    end
+
+    def self.find_by_merchant_id(merchant_id)
+      result = invoices.limit(1).where(:merchant_id => merchant_id.to_i).first
+      new(result) if result
+    end
+
   end
 end
 
