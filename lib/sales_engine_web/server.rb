@@ -31,5 +31,19 @@ module SalesEngineWeb
       end
       body invoice.to_json
     end
+
+    get '/invoices/find_all' do
+      if params[:customer_id]
+        invoices = Invoice.find_all_by_customer_id(params[:customer_id])
+      else #params[:merchant_id]
+        invoices = Invoice.find_all_by_merchant_id(params[:merchant_id])
+      end
+      body invoices.to_json
+    end
+
+    get '/invoices/random' do
+      invoice = Invoice.random
+      body invoice.to_json
+    end
   end
 end

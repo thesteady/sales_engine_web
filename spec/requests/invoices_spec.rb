@@ -15,6 +15,8 @@ describe "/invoices/" do
 
   let(:invoice1) {SalesEngineWeb::Invoice.create(customer_id: 12, merchant_id: 2)}
   let(:invoice2) {SalesEngineWeb::Invoice.create(customer_id: 1, merchant_id: 3)}
+  let(:invoice3) {SalesEngineWeb::Invoice.create(customer_id: 2, merchant_id: 1)}
+  let(:invoice4) {SalesEngineWeb::Invoice.create(customer_id: 12, merchant_id: 1)}
 
   describe 'find' do
     context "given an id" do
@@ -53,13 +55,19 @@ describe "/invoices/" do
   describe '/invoices/find_all' do
     context 'given a customer id' do
       it "returns all the invoices associated with the customer id" do
-        pending
+        invoice3 && invoice4
+        get "/invoices/find_all?customer_id=#{invoice1.customer_id}"
+        output = JSON.parse(last_response.body)
+        expect(output.count).to eq 2
       end
     end
 
     context 'given a merchant id' do
       it "returns all the invoices associated with the merchant id" do
-        pending
+        invoice3 && invoice4
+        get "/invoices/find_all?merchant_id=#{invoice3.merchant_id}"
+        output = JSON.parse(last_response.body)
+        expect(output.count).to eq 2
       end
     end
 
@@ -73,7 +81,9 @@ describe "/invoices/" do
 
   describe 'invoices/random' do
     it "returns a random invoice" do
-      pending
+      get "/invoices/random"
+      output = JSON.parse(last_response.body)
+      expect( [ invoice1.id, invoice2.id ] ).to include( output['id'] )
     end
   end
 end

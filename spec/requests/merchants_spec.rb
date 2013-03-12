@@ -45,9 +45,7 @@ describe "/merchants/" do
     context "given name='Jumpstart%20Lab'" do
       it "finds the merchant" do
         get "/merchants/find?name=Jumpstart%20Lab"
-
         output = JSON.parse(last_response.body)
-        puts last_response.body
         expect( output['id'] ).to eq merchant1.id
         expect( output['name'] ).to eq merchant1.name
       end

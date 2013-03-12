@@ -34,6 +34,11 @@ module SalesEngineWeb
        # @invoices ||= []
     end
 
+    def self.random
+      invoice = invoices.to_a.sample
+      new(invoice) if invoice
+    end
+
     def self.find(id)
       result = invoices.limit(1).where(:id => id.to_i).first
       new(result) if result
@@ -49,6 +54,15 @@ module SalesEngineWeb
       new(result) if result
     end
 
+    def self.find_all_by_customer_id(customer_id)
+      results = invoices.where(:customer_id =>customer_id.to_i).to_a
+      results.collect {|result| new(result)}
+    end
+
+    def self.find_all_by_merchant_id(merchant_id)
+      results = invoices.where(:merchant_id => merchant_id.to_i).to_a
+      results.collect{|result| new(result)}
+    end
   end
 end
 
