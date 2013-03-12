@@ -26,31 +26,39 @@ module SalesEngineWeb
       { :id => id, :name => name}
     end
 
+    def self.find_and_instantiate(&block)
+      result = block.call
+      Merchant.new(result) if result
+    end
+
     def self.find(id)
-      result = merchants.where(:id => id.to_i).limit(1).first
-      new(result) if result
+      find_and_instantiate{ merchants.where(:id => id.to_i).limit(1).first }
     end
 
     def self.find_by_name(name)
-      result = merchants.limit(1).where(Sequel.ilike(:name, "%#{name}%")).first
-      new(result) if result
+      find_and_instantiate do
+        merchants.limit(1).where(Sequel.ilike(:name, "%#{name}%")).first
+      end
     end
 
     def self.find_all_by_name(name)
-      puts "%%%%%%%"
-      puts name.inspect
-
       results = merchants.where(Sequel.ilike(:name, "%#{name}%")).to_a
       #returns an array of hashes
+      # puts "results of database search"
+      # puts results.inspect
+      collection = results.collect {|result| new(result)}
+      #returns an array of objects
+      # puts "collection of merchants: #{results.inspect}"
+      # puts collection.inspect
+      # collection
     end
 
-    def to_json
+    def to_json(state = nil)
       {:id => id, :name => name}.to_json
     end
 
     def self.random
-      result = merchants.to_a.sample
-      new(result) if result
+      find_and_instantiate { merchants.to_a.sample }
     end
 
     def self.merchants

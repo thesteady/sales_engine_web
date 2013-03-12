@@ -12,7 +12,8 @@ module SalesEngineWeb
 
     get '/merchants/find_all' do
       status 200
-      merchants = Merchant.find_all(params[:name])
+      # if params[:name]
+      merchants = Merchant.find_all_by_name(params[:name])
       body merchants.to_json
     end
 

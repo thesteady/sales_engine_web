@@ -34,14 +34,24 @@ module SalesEngineWeb
       end
     end
 
-    describe '.find_all' do
-      context "given a substring of a name(name='My%20Shop')" do
-        it "finds all merchants with a substring in name" do
-          Merchant.create(:name => "Julies My Shop")
-          Merchant.create(:name => "My Shop at Harrys")
-          results = Merchant.find_all_by_name("My Shop")
-          expect(results.count).to eq 2
-        end
+    describe '.find_all_by_name' do
+      before (:each) do
+        Merchant.create(:name => "Julies My Shop")
+        Merchant.create(:name => "My Shop at Harrys")
+      end
+
+      it "finds all merchants with a substring in name" do
+        results = Merchant.find_all_by_name("My Shop")
+        expect(results.count).to eq 2
+      end
+
+      it "finds all merchants with substring, case insensitive" do
+        results = Merchant.find_all_by_name("my shop")
+        expect(results.count).to eq 2
+      end
+
+      it "returns 0 or an empty array when there are no matches" do
+        pending
       end
     end
 

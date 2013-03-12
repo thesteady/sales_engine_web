@@ -8,13 +8,13 @@ describe "/merchants/" do
   end
 
   before(:each) do
-    merchant1 && merchant2
+    merchant1 && merchant2 && merchant3 && merchant4
   end
 
   let(:merchant1){ SalesEngineWeb::Merchant.create(:name => "Jumpstart Lab") }
   let(:merchant2){ SalesEngineWeb::Merchant.create(:name => "gSchool") }
   let(:merchant3){ SalesEngineWeb::Merchant.create(:name => "My Shop Things") }
-  let(:merchant3){ SalesEngineWeb::Merchant.create(:name => "Lucy's My Shop") }
+  let(:merchant4){ SalesEngineWeb::Merchant.create(:name => "Lucy's My Shop") }
 
   describe "random" do
     it "returns a random merchant" do
@@ -54,8 +54,8 @@ describe "/merchants/" do
   describe "find_all" do
     context "given name='My%20Shop'" do
       it "returns all merchants who have 'My Shop' in their name" do
-        pending
         get "/merchants/find_all?name=My%20Shop"
+
         output = JSON.parse(last_response.body)
         expect(output.count).to eq 2
       end
