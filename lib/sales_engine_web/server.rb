@@ -10,6 +10,12 @@ module SalesEngineWeb
       body merchant.to_json
     end
 
+    get '/merchants/find_all' do
+      status 200
+      merchants = Merchant.find_all(params[:name])
+      body merchants.to_json
+    end
+
     get '/merchants/random' do
       Merchant.random.to_json
     end
