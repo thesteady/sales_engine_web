@@ -27,20 +27,19 @@ describe "/customers/" do
     end
     context 'given a customer first name' do
       it 'returns a customer with that first name' do
-        pending
-      end
-
-      it 'returns a customer with that first name, case insensitive' do
-        pending
+        get "/customers/find?first_name=#{customer2.first_name}"
+        output = JSON.parse(last_response.body)
+        expect(output['id']).to eq customer2.id
+        expect(output['first_name']).to eq customer2.first_name
       end
     end
+
     context 'given a customer last name' do
       it 'returns a customer with that last name' do
-        pending
-      end
-
-      it 'returns a customer with that last name, case insensitive' do
-        pending
+        get "/customers/find?last_name=#{customer2.last_name}"
+        output = JSON.parse(last_response.body)
+        expect(output['id']).to eq customer2.id
+        expect(output['first_name']).to eq customer2.first_name
       end
     end
   end

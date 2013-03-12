@@ -40,5 +40,15 @@ module SalesEngineWeb
       result = customers.limit(1).where(:id => id.to_i).first
       new(result) if result
     end
+
+    def self.find_by_first_name(first_name)
+      result = customers.limit(1).where(Sequel.ilike(:first_name, "%#{first_name}%")).first
+      new(result) if result
+    end
+
+    def self.find_by_last_name(last_name)
+      result = customers.limit(1).where(Sequel.ilike(:last_name, "%#{last_name}%")).first
+      new(result) if result
+    end
   end
 end

@@ -51,7 +51,13 @@ module SalesEngineWeb
 
 ############## CUSTOMERS ##############
     get '/customers/find' do
-      customer = Customer.find(params[:id])
+      if params[:id]
+        customer = Customer.find(params[:id])
+      elsif params[:first_name]
+        customer = Customer.find_by_first_name(params[:first_name])
+      else #params[:last_name]
+        customer = Customer.find_by_last_name(params[:last_name])
+      end
       body customer.to_json
     end
   end
