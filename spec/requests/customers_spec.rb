@@ -15,6 +15,7 @@ describe "/customers/" do
   let(:customer2) {SalesEngineWeb::Customer.create(:first_name => 'Meryl', :last_name => 'Streep')}
   let(:customer3) {SalesEngineWeb::Customer.create(:first_name => 'Whoopi', :last_name => 'Goldberg')}
   let(:customer4) {SalesEngineWeb::Customer.create(:first_name => 'Jerry', :last_name => 'Springer')}
+  let(:customer5) {SalesEngineWeb::Customer.create(:first_name => 'Sam', :last_name => 'Springer')}
 
   describe '/customers/find' do
     context 'given a customer id' do
@@ -54,23 +55,35 @@ describe "/customers/" do
       end
 
       it 'returns all customers with that first name, case insensitive' do
-        pending
+        customer4
+        get "/customers/find_all?first_name=jerry"
+        output = JSON.parse(last_response.body)
+        expect(output.count).to eq 2
       end
     end
+
     context 'given a customer last name' do
       it 'returns all customers with that last name' do
-        pending
+        customer4 && customer5
+        get "/customers/find_all?last_name=#{customer5.last_name}"
+        output = JSON.parse(last_response.body)
+        expect(output.count).to eq 2
       end
 
       it 'returns all customers with that last name, case insensitive' do
-        pending
+        customer4 && customer5
+        get "/customers/find_all?last_name=SPRINGER"
+        output = JSON.parse(last_response.body)
+        expect(output.count).to eq 2
       end
     end
   end
 
   describe 'customers/random' do
     it 'returns a random customer instance' do
-      pending
+      get '/customers/random'
+      output = JSON.parse(last_response.body)
+      expect( [ customer1.id, customer2.id ] ).to include( output['id'] )
     end
   end
 end

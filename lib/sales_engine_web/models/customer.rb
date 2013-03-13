@@ -55,5 +55,15 @@ module SalesEngineWeb
       results = customers.where(Sequel.ilike(:first_name, "%#{first_name}%"))
       collection = results.collect {|result| new(result)}
     end
+
+    def self.find_all_by_last_name(last_name)
+      results = customers.where(Sequel.ilike(:last_name, "%#{last_name}%"))
+      collection = results.collect {|result| new(result)}
+    end
+
+    def self.random
+      result = customers.to_a.sample
+      new(result) if result
+    end
   end
 end

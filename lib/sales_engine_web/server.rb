@@ -64,12 +64,15 @@ module SalesEngineWeb
     get '/customers/find_all' do
       if params[:first_name]
         customers = Customer.find_all_by_first_name(params[:first_name])
-        puts "CUSTOMERS"
-        puts customers.inspect
       else #params[:last_name]
         customers = Customer.find_all_by_last_name(params[:last_name])
       end
       body customers.to_json
+    end
+
+    get '/customers/random' do
+      customer = Customer.random
+      body customer.to_json
     end
   end
 end
