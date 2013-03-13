@@ -23,17 +23,17 @@ module SalesEngineWeb
       Merchant.random.to_json
     end
 
-    # get '/merchants/:id/items' do
-    #   merchant = Merchant.find(params[:id])
-    #   items = Item.find_all_by_merchant_id(merchant.id)
-    #   body items.to_json
-    # end
+    get '/merchants/:id/items' do
+      merchant = Merchant.find(params[:id])
+      items = Item.find_all_by_merchant_id(merchant.id)
+      body items.to_json
+    end
 
-     # get '/merchants/:id/invoices' do
-    #   merchant = Merchant.find(params[:id])
-    #   invoices = Invoice.find_all_by_merchant_id(merchant.id)
-    #   body invoicess.to_json
-    # end
+    get '/merchants/:id/invoices' do
+      merchant = Merchant.find(params[:id])
+      invoices = Invoice.find_all_by_merchant_id(merchant.id)
+      body invoices.to_json
+    end
 
 
 ########### INVOICES #######################

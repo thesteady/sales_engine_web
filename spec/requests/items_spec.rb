@@ -96,13 +96,13 @@ describe "/items/" do
 
     context 'given an item description substring' do
       it "returns all items with that substring in their description" do
-        get "/items/find_all?descriptiong=Blah%20Blah"
+        get "/items/find_all?description=Blah%20Blah"
         output = JSON.parse(last_response.body)
         expect(output.count).to eq 1
       end
 
       it "returns all items with that substring in their description, case insensitive" do
-        get "/items/find_all?descriptiong=BLAH%20BLAH"
+        get "/items/find_all?description=BLAH%20BLAH"
         output = JSON.parse(last_response.body)
         expect(output.count).to eq 1
       end

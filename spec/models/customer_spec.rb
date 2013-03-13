@@ -8,8 +8,6 @@ let(:customer1) {Customer.create(first_name: 'Jerry', last_name: 'Seinfeld')}
     describe '.create' do
       it 'returns a customer object' do
         customer = Customer.create({first_name: 'Jerry', last_name: 'Seinfeld'})
-        puts customer.inspect
-
         expect(customer.first_name).to eq 'Jerry'
         expect(customer.last_name).to eq "Seinfeld"
       end
