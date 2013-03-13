@@ -90,11 +90,16 @@ module SalesEngineWeb
 
     get '/items/find_all' do
       if params[:name]
-      items = Item.find_all_by_name(params[:name])
-    else
-      items = Item.find_all_by_description(params[:description])
-    end
+        items = Item.find_all_by_name(params[:name])
+      else
+        items = Item.find_all_by_description(params[:description])
+      end
       body items.to_json
+    end
+
+    get '/items/random' do
+      item = Item.random
+      body item.to_json
     end
   end
 end

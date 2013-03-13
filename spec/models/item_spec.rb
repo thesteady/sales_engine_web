@@ -72,5 +72,12 @@ module SalesEngineWeb
         end
       end
     end
+
+    describe 'random' do
+      it 'returns a random item instance' do
+        item = Item.random
+        expect(item).to be_kind_of Item
+      end
+    end
   end
 end

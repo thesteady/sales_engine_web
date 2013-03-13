@@ -70,5 +70,10 @@ module SalesEngineWeb
       results = items.where(Sequel.ilike(:description, "%#{description}")).to_a
       results.collect {|result| new(result)}
     end
+
+    def self.random
+      result = items.to_a.sample
+      new(result) if result
+    end
   end
 end

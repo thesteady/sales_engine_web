@@ -102,26 +102,31 @@ describe "/items/" do
       end
 
       it "returns all items with that substring in their description, case insensitive" do
-        pending
+        get "/items/find_all?descriptiong=BLAH%20BLAH"
+        output = JSON.parse(last_response.body)
+        expect(output.count).to eq 1
       end
     end
 
-    context 'given an item unit price' do
-      it "returns all items with that unit price" do
-        pending
-      end
-    end
+    # context 'given an item unit price' do
+    #   it "returns all items with that unit price" do
+    #     pending
+    #   end
+    # end
 
-    context 'given a merchant id' do
-      it "returns all items with that merchant id" do
-        pending
-      end
-    end
+    # context 'given a merchant id' do
+    #   it "returns all items with that merchant id" do
+    #     pending
+    #   end
+    # end
   end
 
   describe '/items/random' do
     it "returns a random item" do
-      pending
+      item2
+      get '/items/random'
+      output = JSON.parse(last_response.body)
+      expect( [ item1.id, item2.id ] ).to include( output['id'] )
     end
   end
 end
