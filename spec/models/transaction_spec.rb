@@ -38,6 +38,13 @@ module SalesEngineWeb
           expect(results.count).to eq 1
         end
       end
+
+      # context 'given a customer id' do
+      #   it 'uses invoices to return the transactions by customer id' do
+      #     results = Transaction.find_all_by_customer_id(customer1.id)
+      #     expect(results.count).to eq 1
+      #   end
+      # end
     end
   end
 end

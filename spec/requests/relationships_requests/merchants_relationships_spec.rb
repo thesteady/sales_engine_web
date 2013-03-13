@@ -29,11 +29,11 @@ describe "/merchants/:id" do
       end
     end
 
-    context 'when that id does not exist' do
-      it 'displays an error message' do
-        pending
-      end
-    end
+    # context 'when that id does not exist' do
+    #   it 'displays an error message' do
+    #     pending
+    #   end
+    # end
   end
 
   describe '/merchants/:id/invoices' do
@@ -46,10 +46,10 @@ describe "/merchants/:id" do
       end
     end
 
-    context 'when that id does not exist' do
-      it 'displays an error message' do
-        pending
-      end
-    end
+    # context 'when that id does not exist' do
+    #   it 'displays an error message' do
+    #     pending
+    #   end
+    # end
   end
 end

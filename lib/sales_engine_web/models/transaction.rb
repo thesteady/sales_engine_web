@@ -56,7 +56,6 @@ module SalesEngineWeb
       results.collect{|result| new(result)}
     end
 
-
     def self.random
       result = transactions.to_a.sample
       new(result) if result

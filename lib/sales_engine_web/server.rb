@@ -87,6 +87,22 @@ module SalesEngineWeb
       customer = Customer.random
       body customer.to_json
     end
+
+    get '/customers/:id/invoices' do
+      customer = Customer.find(params[:id])
+      invoices = Invoice.find_all_by_customer_id(customer.id)
+      body invoices.to_json
+    end
+
+    get '/customers/:id/transactions' do
+      customer = Customer.find(params[:id])
+      invoices = Invoice.find_all_by_customer_id(customer.id)
+      transacts = invoices.collect do |invoice|
+        Transaction.find_all_by_invoice_id(invoice.id)
+      end
+      body transacts.to_json
+    end
+
 ################## ITEMS ###############
     get '/items/find' do
       if params[:id]
@@ -116,6 +132,13 @@ module SalesEngineWeb
       item = Item.random
       body item.to_json
     end
+
+    get '/items/:id/merchant' do
+      item = Item.find(params[:id])
+      merchant = Merchant.find(item.merchant_id)
+      body merchant.to_json
+    end
+
 ################# TRANSACTIONS ###############
     get '/transactions/find' do
       if params[:id]
