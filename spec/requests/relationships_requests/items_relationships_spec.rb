@@ -8,7 +8,7 @@ describe "/items/:id" do
   end
 
   before(:each) do
-    merchant1 && item1 && customer1 && invoice1 
+    merchant1 && item1 && customer1 && invoice1
     # && inv_item1 && inv_item2
   end
 

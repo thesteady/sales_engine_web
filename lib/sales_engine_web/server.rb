@@ -62,6 +62,23 @@ module SalesEngineWeb
       body invoice.to_json
     end
 
+    get '/invoices/:id/transactions' do
+      transacts = Transaction.find_all_by_invoice_id(params[:id])
+      body transacts.to_json
+    end
+
+    get '/invoices/:id/customer' do
+     invoice = Invoice.find(params[:id])
+     customer = Customer.find(invoice.customer_id)
+     body customer.to_json
+    end
+
+    get '/invoices/:id/merchant' do
+     invoice = Invoice.find(params[:id])
+     merchant = Merchant.find(invoice.merchant_id)
+     body merchant.to_json
+    end
+
 ############## CUSTOMERS ##############
     get '/customers/find' do
       if params[:id]
