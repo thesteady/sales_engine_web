@@ -55,5 +55,20 @@ module SalesEngineWeb
       result = items.limit(1).where(Sequel.ilike(:description, "%#{description}%")).first
       new(result) if result
     end
+
+    def self.find_by_merchant_id(merchant_id)
+      result = items.limit(1).where(merchant_id: merchant_id).first
+      new(result) if result
+    end
+
+    def self.find_all_by_name(name)
+      results = items.where(Sequel.ilike(:name, "%#{name}")).to_a
+      results.collect {|result| new(result)}
+    end
+
+    def self.find_all_by_description(description)
+      results = items.where(Sequel.ilike(:description, "%#{description}")).to_a
+      results.collect {|result| new(result)}
+    end
   end
 end

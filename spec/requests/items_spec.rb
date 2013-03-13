@@ -11,6 +11,7 @@ describe "/items/" do
   end
   let(:merchant1) {SalesEngineWeb::Merchant.create(name:'ShoesALot')}
   let(:item1) {SalesEngineWeb::Item.create(name: 'Shoes', merchant_id: merchant1.id, description: 'Blah blah', unit_price: 1999)}
+  let(:item2) {SalesEngineWeb::Item.create(name: 'PairofShoes', merchant_id: merchant1.id, description: 'more', unit_price: 1999)}
 
   describe '/items/find' do
     context 'given an id' do
@@ -54,21 +55,24 @@ describe "/items/" do
       end
     end
 
-    context 'given an item unit price in cents' do
-      it 'returns an item instance' do
-        pending
-      end
-    end
+    # context 'given an item unit price in cents' do
+    #   it 'returns an item instance' do
+    #     pending
+    #   end
+    # end
 
-    context 'given an item unit price in float (21.99)' do
-      it 'returns and item instance' do
-        pending
-      end
-    end
+    # context 'given an item unit price in float (21.99)' do
+    #   it 'returns and item instance' do
+    #     pending
+    #   end
+    # end
 
     context 'given a merchant id' do
       it 'returns an item instance' do
-        pending
+        get "/items/find?merchant_id=#{merchant1.id}"
+        output = JSON.parse(last_response.body)
+        expect(output['id']).to eq item1.id
+        expect(output['name']).to eq item1.name
       end
     end
   end
@@ -76,17 +80,25 @@ describe "/items/" do
   describe '/items/find_all' do
     context 'given an item name substring' do
       it 'returns all items with that substring' do
-        pending
+        item2
+        get "/items/find_all?name=Shoes"
+        output = JSON.parse(last_response.body)
+        expect(output.count).to eq 2
       end
 
       it 'returns all items with that substring, case insensitive' do
-        pending
+        item2
+        get "/items/find_all?name=SHOES"
+        output = JSON.parse(last_response.body)
+        expect(output.count).to eq 2
       end
     end
 
     context 'given an item description substring' do
       it "returns all items with that substring in their description" do
-        pending
+        get "/items/find_all?descriptiong=Blah%20Blah"
+        output = JSON.parse(last_response.body)
+        expect(output.count).to eq 1
       end
 
       it "returns all items with that substring in their description, case insensitive" do

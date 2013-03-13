@@ -80,10 +80,21 @@ module SalesEngineWeb
         item = Item.find(params[:id])
       elsif params[:name]
         item = Item.find_by_name(params[:name])
-      else #will want more here
+      elsif params[:description]
         item = Item.find_by_description(params[:description])
+      else
+        item = Item.find_by_merchant_id(params[:merchant_id])
       end
       body item.to_json
+    end
+
+    get '/items/find_all' do
+      if params[:name]
+      items = Item.find_all_by_name(params[:name])
+    else
+      items = Item.find_all_by_description(params[:description])
+    end
+      body items.to_json
     end
   end
 end
