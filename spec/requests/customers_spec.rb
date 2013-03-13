@@ -47,7 +47,10 @@ describe "/customers/" do
   describe 'customers/find_all' do
     context 'given a customer first name' do
       it 'returns all customers with that first name' do
-        pending
+        customer4
+        get "/customers/find_all?first_name=#{customer1.first_name}"
+        output = JSON.parse(last_response.body)
+        expect(output.count).to eq 2
       end
 
       it 'returns all customers with that first name, case insensitive' do

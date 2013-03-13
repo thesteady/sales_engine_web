@@ -10,13 +10,16 @@ describe "/invoices/" do
   # id,customer_id,merchant_id,status,created_at,updated_at
 
   before (:each) do
-  invoice1 && invoice2
+  customer1 && customer2 && merchant1 && invoice1 && invoice2
   end
-
-  let(:invoice1) {SalesEngineWeb::Invoice.create(customer_id: 12, merchant_id: 2)}
-  let(:invoice2) {SalesEngineWeb::Invoice.create(customer_id: 1, merchant_id: 3)}
-  let(:invoice3) {SalesEngineWeb::Invoice.create(customer_id: 2, merchant_id: 1)}
-  let(:invoice4) {SalesEngineWeb::Invoice.create(customer_id: 12, merchant_id: 1)}
+  let(:customer1) {SalesEngineWeb::Customer.create(first_name: 'Clint', last_name: 'Eastwood')}
+  let(:customer2) {SalesEngineWeb::Customer.create(first_name: 'Whoopi', last_name: 'Goldberg')}
+  let(:merchant1) {SalesEngineWeb::Merchant.create(name: 'Hats N More')}
+  let(:merchant2) {SalesEngineWeb::Merchant.create(name: 'Puppyville')}
+  let(:invoice1) {SalesEngineWeb::Invoice.create(customer_id: customer1.id, merchant_id: merchant2.id)}
+  let(:invoice2) {SalesEngineWeb::Invoice.create(customer_id: customer2.id, merchant_id: merchant2.id)}
+  let(:invoice3) {SalesEngineWeb::Invoice.create(customer_id: customer2.id, merchant_id: merchant1.id)}
+  let(:invoice4) {SalesEngineWeb::Invoice.create(customer_id: customer1.id, merchant_id: merchant1.id)}
 
   describe 'find' do
     context "given an id" do

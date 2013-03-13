@@ -52,7 +52,9 @@ module SalesEngineWeb
         expect(found.id).to eq target.id
         end
       end
-
+###
+      # describe find by last name partial string
+###
       describe '.find_by_last_name(last_name), case insensitive' do
         it 'returns a customer object that matches' do
         target = Customer.create({first_name: 'Sally', last_name: 'Pizza'})
@@ -60,6 +62,15 @@ module SalesEngineWeb
         expect(found.id).to eq target.id
         end
       end
+
+      describe '.find_all_by_first_name(first_name)' do
+      it 'returns a customer object' do
+        target = Customer.create({first_name: 'Pumpkin', last_name: 'Pie'})
+        Customer.create({first_name: 'Pumpkin', last_name: 'Jones'})
+        found = Customer.find_all_by_first_name('Pumpkin')
+        expect(found.count).to eq 2
+      end
+    end
 
   end
 end

@@ -50,5 +50,10 @@ module SalesEngineWeb
       result = customers.limit(1).where(Sequel.ilike(:last_name, "%#{last_name}%")).first
       new(result) if result
     end
+
+    def self.find_all_by_first_name(first_name)
+      results = customers.where(Sequel.ilike(:first_name, "%#{first_name}%"))
+      collection = results.collect {|result| new(result)}
+    end
   end
 end
