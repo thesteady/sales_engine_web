@@ -190,8 +190,21 @@ module SalesEngineWeb
     get '/invoice_items/find' do
       if params[:id]
         inv_item = InvoiceItem.find(params[:id])
+      elsif params[:item_id]
+        inv_item = InvoiceItem.find_by_item_id(params[:item_id])
+      else #params[:invoice_id]
+        inv_item = InvoiceItem.find_by_invoice_id(params[:invoice_id])
       end
       body inv_item.to_json
+    end
+
+    get '/invoice_items/find_all' do
+      if params[:item_id]
+        inv_items = InvoiceItem.find_all_by_item_id(params[:item_id])
+      else #params[:invoice_id]
+        inv_items = InvoiceItem.find_all_by_invoice_id(params[:invoice_id])
+      end
+      body inv_items.to_json
     end
 
     get '/invoice_items/random' do

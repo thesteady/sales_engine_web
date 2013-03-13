@@ -51,6 +51,21 @@ module SalesEngineWeb
       new(result) if result
     end
 
+    def self.find_by_item_id(item_id)
+      result = invoice_items.limit(1).where(item_id: item_id).first
+      new(result) if result
+    end
+
+    def self.find_all_by_item_id(item_id)
+      results = invoice_items.where(item_id: item_id).to_a
+      results.collect {|result| new(result)}
+    end
+
+    def self.find_all_by_invoice_id(invoice_id)
+      results = invoice_items.where(invoice_id: invoice_id).to_a
+      results.collect {|result| new(result)}
+    end
+
     def self.random
       result = invoice_items.to_a.sample
       new(result) if result
