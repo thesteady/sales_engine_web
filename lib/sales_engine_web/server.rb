@@ -3,7 +3,6 @@ module SalesEngineWeb
 
 ################### MERCHANTS ##################
     get '/merchants/find' do
-      status 200
       if params[:id]
         merchant = Merchant.find(params[:id])
       else
@@ -13,7 +12,6 @@ module SalesEngineWeb
     end
 
     get '/merchants/find_all' do
-      status 200
       # if params[:name]
       merchants = Merchant.find_all_by_name(params[:name])
       body merchants.to_json

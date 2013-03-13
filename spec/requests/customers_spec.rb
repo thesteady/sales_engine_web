@@ -10,6 +10,7 @@ describe "/customers/" do
   before(:each) do
     customer1 && customer2
   end
+  let(:output) {JSON.parse(last_response.body)}
 
   let(:customer1) {SalesEngineWeb::Customer.create(:first_name => 'Jerry', :last_name => 'Seinfeld')}
   let(:customer2) {SalesEngineWeb::Customer.create(:first_name => 'Meryl', :last_name => 'Streep')}
@@ -21,7 +22,6 @@ describe "/customers/" do
     context 'given a customer id' do
       it 'returns the customer instance with that id' do
         get "/customers/find?id=#{customer1.id}"
-        output = JSON.parse(last_response.body)
         expect(output['id']).to eq customer1.id
         expect(output['first_name']).to eq customer1.first_name
       end
@@ -29,7 +29,6 @@ describe "/customers/" do
     context 'given a customer first name' do
       it 'returns a customer with that first name' do
         get "/customers/find?first_name=#{customer2.first_name}"
-        output = JSON.parse(last_response.body)
         expect(output['id']).to eq customer2.id
         expect(output['first_name']).to eq customer2.first_name
       end
@@ -38,7 +37,6 @@ describe "/customers/" do
     context 'given a customer last name' do
       it 'returns a customer with that last name' do
         get "/customers/find?last_name=#{customer2.last_name}"
-        output = JSON.parse(last_response.body)
         expect(output['id']).to eq customer2.id
         expect(output['first_name']).to eq customer2.first_name
       end
@@ -50,14 +48,12 @@ describe "/customers/" do
       it 'returns all customers with that first name' do
         customer4
         get "/customers/find_all?first_name=#{customer1.first_name}"
-        output = JSON.parse(last_response.body)
         expect(output.count).to eq 2
       end
 
       it 'returns all customers with that first name, case insensitive' do
         customer4
         get "/customers/find_all?first_name=jerry"
-        output = JSON.parse(last_response.body)
         expect(output.count).to eq 2
       end
     end
@@ -66,14 +62,12 @@ describe "/customers/" do
       it 'returns all customers with that last name' do
         customer4 && customer5
         get "/customers/find_all?last_name=#{customer5.last_name}"
-        output = JSON.parse(last_response.body)
         expect(output.count).to eq 2
       end
 
       it 'returns all customers with that last name, case insensitive' do
         customer4 && customer5
         get "/customers/find_all?last_name=SPRINGER"
-        output = JSON.parse(last_response.body)
         expect(output.count).to eq 2
       end
     end
@@ -82,7 +76,6 @@ describe "/customers/" do
   describe 'customers/random' do
     it 'returns a random customer instance' do
       get '/customers/random'
-      output = JSON.parse(last_response.body)
       expect( [ customer1.id, customer2.id ] ).to include( output['id'] )
     end
   end

@@ -89,5 +89,13 @@ let(:customer1) {Customer.create(first_name: 'Jerry', last_name: 'Seinfeld')}
         expect(customer).to be_kind_of Customer
       end
     end
+
+    describe '#invoices' do
+      context "when there are associated invoices" do
+        it "returns a collection" do
+          customer1.invoices
+        end
+      end
+    end
   end
 end

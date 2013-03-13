@@ -9,7 +9,7 @@ describe "/transactions/" do
   before(:each) do
     customer1 && merchant1 && invoice1 && transact1 && transact2
   end
-
+  let(:output) {JSON.parse(last_response.body)}
   let(:customer1) {SalesEngineWeb::Customer.create(first_name: 'Clint', last_name: 'Eastwood')}
   let(:merchant1) {SalesEngineWeb::Merchant.create(name: 'Scotts Shirt Shack')}
   let(:invoice1)  {SalesEngineWeb::Invoice.create(customer_id: customer1.id, merchant_id: merchant1.id)}
@@ -22,7 +22,6 @@ describe "/transactions/" do
     context 'given a transaction id' do
       it 'returns the associated transaction' do
         get "/transactions/find?id=#{ transact1.id }"
-        output = JSON.parse(last_response.body)
         expect( output['id'] ).to eq transact1.id
         expect( output['result'] ).to eq transact1.result
       end
@@ -31,7 +30,6 @@ describe "/transactions/" do
     context 'given an invoice id' do
       it 'returns an associated transaction' do
         get "/transactions/find?invoice_id=#{transact1.invoice_id}"
-        output = JSON.parse(last_response.body)
         expect( output['id'] ).to eq transact1.id
         expect( output['result'] ).to eq transact1.result
       end
@@ -63,7 +61,6 @@ describe "/transactions/" do
         pending
 
         get "transactions/find_all?invoice_id=t#{transact1.invoice_id}"
-        output = JSON.parse(last_response.body)
         expect(output.count).to eq 2
       end
     end
@@ -90,7 +87,6 @@ describe "/transactions/" do
   describe '/transactions/random' do
     it 'returns a random transaction instance' do
       get '/transactions/random'
-      output = JSON.parse(last_response.body)
       expect( [ transact1.id, transact2.id ] ).to include( output['id'] )
     end
   end

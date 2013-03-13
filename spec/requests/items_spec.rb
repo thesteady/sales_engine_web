@@ -9,6 +9,7 @@ describe "/items/" do
   before(:each) do
     merchant1 && item1
   end
+  let(:output) {JSON.parse(last_response.body)}
   let(:merchant1) {SalesEngineWeb::Merchant.create(name:'ShoesALot')}
   let(:item1) {SalesEngineWeb::Item.create(name: 'Shoes', merchant_id: merchant1.id, description: 'Blah blah', unit_price: 1999)}
   let(:item2) {SalesEngineWeb::Item.create(name: 'PairofShoes', merchant_id: merchant1.id, description: 'more', unit_price: 1999)}
@@ -17,7 +18,6 @@ describe "/items/" do
     context 'given an id' do
       it "returns the item" do
         get "/items/find?id=#{item1.id}"
-        output = JSON.parse(last_response.body)
         expect(output['id']).to eq item1.id
         expect(output['name']).to eq item1.name
       end
@@ -26,14 +26,12 @@ describe "/items/" do
     context 'given an item name' do
       it "returns an item instance" do
         get "/items/find?name=#{item1.name}"
-        output = JSON.parse(last_response.body)
         expect(output['id']).to eq item1.id
         expect(output['name']).to eq item1.name
       end
 
       it 'returns an item instance, case insensitive' do
         get "/items/find?name=#{item1.name.upcase}"
-        output = JSON.parse(last_response.body)
         expect(output['id']).to eq item1.id
         expect(output['name']).to eq item1.name
       end
@@ -42,14 +40,12 @@ describe "/items/" do
     context 'given an item description' do
       it 'returns an item instance' do
         get "/items/find?description=Blah%20Blah"
-        output = JSON.parse(last_response.body)
         expect(output['id']).to eq item1.id
         expect(output['name']).to eq item1.name
       end
 
       it 'returns an item instance, case insensitive' do
         get "/items/find?description=blah%20blah"
-        output = JSON.parse(last_response.body)
         expect(output['id']).to eq item1.id
         expect(output['name']).to eq item1.name
       end
