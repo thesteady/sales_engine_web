@@ -74,5 +74,16 @@ module SalesEngineWeb
       customer = Customer.random
       body customer.to_json
     end
+################## ITEMS ###############
+    get '/items/find' do
+      if params[:id]
+        item = Item.find(params[:id])
+      elsif params[:name]
+        item = Item.find_by_name(params[:name])
+      else #will want more here
+        item = Item.find_by_description(params[:description])
+      end
+      body item.to_json
+    end
   end
 end

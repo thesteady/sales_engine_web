@@ -34,23 +34,31 @@ module SalesEngineWeb
       database[:customers]
     end
 
+    def self.items
+      unless tables.include?(:items)
+        build_items_table
+      end
+      database[:items]
+    end
+
     def self.tables
       @tables ||= []
     end
 
     def self.build_merchants_table
-      database.
       tables << :merchants
     end
 
     def self.build_invoices_table
-      database.
       tables << :invoices
     end
 
     def self.build_customers_table
-      database.
       tables << :customers
+    end
+
+    def self.build_items_table
+      tables << :items
     end
 
     def self.environment=(input)

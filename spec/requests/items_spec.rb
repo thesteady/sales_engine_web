@@ -6,27 +6,51 @@ describe "/items/" do
   def app
     SalesEngineWeb::Server
   end
+  before(:each) do
+    merchant1 && item1
+  end
+  let(:merchant1) {SalesEngineWeb::Merchant.create(name:'ShoesALot')}
+  let(:item1) {SalesEngineWeb::Item.create(name: 'Shoes', merchant_id: merchant1.id, description: 'Blah blah', unit_price: 1999)}
 
   describe '/items/find' do
     context 'given an id' do
-      it "returns an item" do
-        pending
+      it "returns the item" do
+        get "/items/find?id=#{item1.id}"
+        output = JSON.parse(last_response.body)
+        expect(output['id']).to eq item1.id
+        expect(output['name']).to eq item1.name
       end
     end
 
     context 'given an item name' do
       it "returns an item instance" do
-        pending
+        get "/items/find?name=#{item1.name}"
+        output = JSON.parse(last_response.body)
+        expect(output['id']).to eq item1.id
+        expect(output['name']).to eq item1.name
       end
 
       it 'returns an item instance, case insensitive' do
-        pending
+        get "/items/find?name=#{item1.name.upcase}"
+        output = JSON.parse(last_response.body)
+        expect(output['id']).to eq item1.id
+        expect(output['name']).to eq item1.name
       end
     end
 
     context 'given an item description' do
       it 'returns an item instance' do
-        pending
+        get "/items/find?description=Blah%20Blah"
+        output = JSON.parse(last_response.body)
+        expect(output['id']).to eq item1.id
+        expect(output['name']).to eq item1.name
+      end
+
+      it 'returns an item instance, case insensitive' do
+        get "/items/find?description=blah%20blah"
+        output = JSON.parse(last_response.body)
+        expect(output['id']).to eq item1.id
+        expect(output['name']).to eq item1.name
       end
     end
 
