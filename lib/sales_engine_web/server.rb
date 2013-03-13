@@ -79,6 +79,17 @@ module SalesEngineWeb
      body merchant.to_json
     end
 
+    get '/invoices/:id/invoice_items' do
+      inv_items = InvoiceItem.find_all_by_invoice_id(params[:id])
+      body inv_items.to_json
+    end
+
+    get '/invoices/:id/items' do
+      inv_items = InvoiceItem.find_all_by_invoice_id(params[:id])
+      items = inv_items.collect {|inv_item| Item.find(inv_item.item_id)}
+      body items.to_json
+    end
+
 ############## CUSTOMERS ##############
     get '/customers/find' do
       if params[:id]
@@ -205,6 +216,18 @@ module SalesEngineWeb
         inv_items = InvoiceItem.find_all_by_invoice_id(params[:invoice_id])
       end
       body inv_items.to_json
+    end
+
+    get '/invoice_items/:id/invoice' do
+      inv_item = InvoiceItem.find(params[:id])
+      invoice = Invoice.find(inv_item.invoice_id)
+      body invoice.to_json
+    end
+
+    get '/invoice_items/:id/item' do
+      inv_item = InvoiceItem.find(params[:id])
+      item = Item.find(inv_item.item_id)
+      body item.to_json
     end
 
     get '/invoice_items/random' do

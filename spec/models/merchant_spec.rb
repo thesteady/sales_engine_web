@@ -51,7 +51,8 @@ module SalesEngineWeb
       end
 
       it "returns 0 or an empty array when there are no matches" do
-        pending
+        results = Merchant.find_all_by_name("coffee")
+        expect(results.count).to eq 0
       end
     end
 
