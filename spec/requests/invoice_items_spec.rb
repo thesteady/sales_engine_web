@@ -7,10 +7,15 @@ describe "/invoice_items/" do
     SalesEngineWeb::Server
   end
 
+  # let(:inv_item1) {SalesEngineWeb::InvoiceItem.create(item_id: item1.id, invoice_id: invoice1.id, quantity: 5, unit_price: 399)}
+
   describe '/invoice_items/find' do
     context 'given an id' do
       it 'returns the invoice item with that id' do
         pending
+       # get "invoice_items/find?id=#{inv_item1.id}"
+       # output = JSON.parse(last_response.body)
+       # expect(output['id']).to eq inv_item1.id
       end
     end
 

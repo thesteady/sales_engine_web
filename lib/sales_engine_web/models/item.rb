@@ -66,6 +66,11 @@ module SalesEngineWeb
       results.collect {|result| new(result)}
     end
 
+    def self.find_all_by_merchant_id(merchant_id)
+      results = items.where(merchant_id: merchant_id).to_a
+      results.collect {|result| new(result)}
+    end
+
     def self.find_all_by_description(description)
       results = items.where(Sequel.ilike(:description, "%#{description}")).to_a
       results.collect {|result| new(result)}

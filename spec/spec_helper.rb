@@ -5,6 +5,7 @@ require './lib/sales_engine_web/models/invoice'
 require './lib/sales_engine_web/models/item'
 require './lib/sales_engine_web/models/invoice_item'
 require './lib/sales_engine_web/models/customer'
+require './lib/sales_engine_web/models/transaction'
 require './lib/sales_engine_web/models/database'
 
 SalesEngineWeb::Database.environment = :test

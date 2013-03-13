@@ -11,6 +11,9 @@ describe "/merchants/:id" do
     context 'when that id exists' do
       it 'returns a collection of items associated with the merchant' do
         pending
+        gets "/merchants/#{merchant1.id}/items"
+        output = JSON.parse(last_response.body)
+        expect(output.count).to eq 92
       end
     end
 
@@ -25,6 +28,9 @@ describe "/merchants/:id" do
     context 'when that id exists' do
       it 'returns a collection of invoices associated with the merchant' do
         pending
+        gets "/merchants/#{merchant1.id}/invoices"
+        output = JSON.parse(last_response.body)
+        expect(output.count).to eq 92
       end
     end
 

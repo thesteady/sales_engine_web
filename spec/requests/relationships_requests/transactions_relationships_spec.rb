@@ -10,6 +10,10 @@ describe "/transactions/:id" do
   describe '/invoice' do
     it 'returns the associated invoice' do
       pending
+      get "/transactions/#{transaction1.id}/invoice"
+      output = JSON.parse(last_response.body)
+      expect(output.count).to eq 1
+      end
     end
-  end
+
 end

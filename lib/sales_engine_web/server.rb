@@ -23,6 +23,19 @@ module SalesEngineWeb
       Merchant.random.to_json
     end
 
+    # get '/merchants/:id/items' do
+    #   merchant = Merchant.find(params[:id])
+    #   items = Item.find_all_by_merchant_id(merchant.id)
+    #   body items.to_json
+    # end
+
+     # get '/merchants/:id/invoices' do
+    #   merchant = Merchant.find(params[:id])
+    #   invoices = Invoice.find_all_by_merchant_id(merchant.id)
+    #   body invoicess.to_json
+    # end
+
+
 ########### INVOICES #######################
     get '/invoices/find' do
       if params[:id]
@@ -91,8 +104,10 @@ module SalesEngineWeb
     get '/items/find_all' do
       if params[:name]
         items = Item.find_all_by_name(params[:name])
-      else
+      elsif params[:description]
         items = Item.find_all_by_description(params[:description])
+      else #params[:merchant_id]
+        items = Item.find_all_by_merchant_id(params[:merchant_id])
       end
       body items.to_json
     end
@@ -100,6 +115,48 @@ module SalesEngineWeb
     get '/items/random' do
       item = Item.random
       body item.to_json
+    end
+################# TRANSACTIONS ###############
+    get '/transactions/find' do
+      if params[:id]
+        transact = Transaction.find(params[:id])
+      else
+        transact = Transaction.find_by_invoice_id(params[:invoice_id])
+      end
+      body transact.to_json
+    end
+
+    get '/transactions/find_all' do
+      if params[:invoice_id]
+        puts params[:invoice_id].inspect
+        transacts = Transaction.find_all_by_invoice_id(params[:invoice_id])
+      else
+        puts "WHATTTTTT"
+      end
+      body transacts.to_json
+    end
+
+    get '/transactions/random' do
+      transact = Transaction.random
+      body transact.to_json
+    end
+
+    get '/transactions/:id/invoice' do
+      transact = Transaction.find(params[:id])
+      invoice = Invoice.find(transact.invoice_id)
+      body invoice.to_json
+    end
+################## INVOICE ITEMS ##############
+    get '/invoice_items/find' do
+      if params[:id]
+        inv_item = InvoiceItem.find(params[:id])
+      end
+      body inv_item.to_json
+    end
+
+    get '/invoice_items/random' do
+      inv_item = InvoiceItem.random
+      body inv_item.to_json
     end
   end
 end
