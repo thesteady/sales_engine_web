@@ -1,3 +1,9 @@
+require 'simplecov'
+
+SimpleCov.start do
+  add_filter "/test"
+end
+
 require './lib/sales_engine_web/sales_engine_web'
 
 SalesEngineWeb::Database.environment = :test

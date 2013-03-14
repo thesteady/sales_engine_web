@@ -8,11 +8,10 @@ describe "/invoices/" do
     SalesEngineWeb::Server
   end
 
-  # id,customer_id,merchant_id,status,created_at,updated_at
-
   before (:each) do
-  customer1 && customer2 && merchant1 && invoice1 && invoice2
+    customer1 && customer2 && merchant1 && invoice1 && invoice2
   end
+
   let(:customer1) {SalesEngineWeb::Customer.create(first_name: 'Clint', last_name: 'Eastwood')}
   let(:customer2) {SalesEngineWeb::Customer.create(first_name: 'Whoopi', last_name: 'Goldberg')}
   let(:merchant1) {SalesEngineWeb::Merchant.create(name: 'Hats N More')}
