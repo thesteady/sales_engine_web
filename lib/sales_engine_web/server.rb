@@ -7,7 +7,7 @@ module SalesEngineWeb
     end
 ################### MERCHANTS ##################
     get '/merchants/random' do
-      # Merchant.random.to_json
+      Merchant.random.to_json
       respond_with MerchantsController.random
     end
 
@@ -29,33 +29,19 @@ module SalesEngineWeb
 
 ########### INVOICES #######################
     get '/invoices/find' do
-      if params[:id]
-        invoice = Invoice.find(params[:id])
-      elsif params[:customer_id]
-        invoice = Invoice.find_by_customer_id(params[:customer_id])
-      else #params[:merchant_id]
-        invoice = Invoice.find_by_merchant_id(params[:merchant_id])
-      end
-      body invoice.to_json
+      respond_with InvoicesController.find(params)
     end
 
     get '/invoices/find_all' do
-      if params[:customer_id]
-        invoices = Invoice.find_all_by_customer_id(params[:customer_id])
-      else #params[:merchant_id]
-        invoices = Invoice.find_all_by_merchant_id(params[:merchant_id])
-      end
-      body invoices.to_json
+      respond_with InvoicesController.find_all(params)
     end
 
     get '/invoices/random' do
-      invoice = Invoice.random
-      body invoice.to_json
+      respond_with InvoicesController.random
     end
 
     get '/invoices/:id/transactions' do
-      transacts = Transaction.find_all_by_invoice_id(params[:id])
-      body transacts.to_json
+      respond_with InvoicesController.transactions(params[:id])
     end
 
     get '/invoices/:id/customer' do
@@ -72,7 +58,6 @@ module SalesEngineWeb
 
     get '/invoices/:id/invoice_items' do
       inv_items = InvoiceItem.find_all_by_invoice_id(params[:id])
-      # inv_items = Invoice.find(params[:id]).invoice_items
       body inv_items.to_json
     end
 
