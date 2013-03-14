@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "/items/:id" do
   include Rack::Test::Methods
+  include_context 'standard output'
 
   def app
     SalesEngineWeb::Server
@@ -23,7 +24,6 @@ describe "/items/:id" do
     it 'returns a collection of associated invoice items' do
       inv_item1 && inv_item2
       get "/items/#{item1.id}/invoice_items"
-      output = JSON.parse(last_response.body)
       expect(output.count).to eq 2
     end
   end
@@ -31,7 +31,6 @@ describe "/items/:id" do
   describe 'merchant' do
     it 'returns the associated merchant' do
       get "/items/#{item1.id}/merchant"
-      output = JSON.parse(last_response.body)
       expect(output['id']).to eq item1.merchant_id
     end
   end

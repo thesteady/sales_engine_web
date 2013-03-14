@@ -9,3 +9,7 @@ RSpec.configure do |config|
     end
   end
 end
+
+shared_context "standard output" do
+  let(:output) {JSON.parse(last_response.body)}
+end

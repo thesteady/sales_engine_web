@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "/customers/" do
   include Rack::Test::Methods
+  include_context 'standard output'
 
   def app
     SalesEngineWeb::Server
@@ -10,7 +11,6 @@ describe "/customers/" do
   before(:each) do
     customer1 && customer2
   end
-  let(:output) {JSON.parse(last_response.body)}
 
   let(:customer1) {SalesEngineWeb::Customer.create(:first_name => 'Jerry', :last_name => 'Seinfeld')}
   let(:customer2) {SalesEngineWeb::Customer.create(:first_name => 'Meryl', :last_name => 'Streep')}

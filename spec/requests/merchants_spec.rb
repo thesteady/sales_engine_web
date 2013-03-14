@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "/merchants/" do
   include Rack::Test::Methods
+  include_context 'standard output'
 
   def app
     SalesEngineWeb::Server
@@ -10,7 +11,7 @@ describe "/merchants/" do
   before(:each) do
     merchant1 && merchant2
   end
-  let(:output) {JSON.parse(last_response.body)}
+  # let(:output) {JSON.parse(last_response.body)}
   let(:merchant1){ SalesEngineWeb::Merchant.create(:name => "Jumpstart Lab") }
   let(:merchant2){ SalesEngineWeb::Merchant.create(:name => "gSchool") }
   let(:merchant3){ SalesEngineWeb::Merchant.create(:name => "My Shop Things") }

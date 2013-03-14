@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "/merchants/:id" do
   include Rack::Test::Methods
+  include_context 'standard output'
 
   def app
     SalesEngineWeb::Server
@@ -24,16 +25,9 @@ describe "/merchants/:id" do
     context 'when that id exists' do
       it 'returns a collection of items associated with the merchant' do
         get "/merchants/#{merchant1.id}/items"
-        output = JSON.parse(last_response.body)
         expect(output.count).to eq 2
       end
     end
-
-    # context 'when that id does not exist' do
-    #   it 'displays an error message' do
-    #     pending
-    #   end
-    # end
   end
 
   describe '/merchants/:id/invoices' do
@@ -41,15 +35,8 @@ describe "/merchants/:id" do
       it 'returns a collection of invoices associated with the merchant' do
         customer1 && invoice1 && invoice2 && invoice3 && invoice4
         get "/merchants/#{merchant1.id}/invoices"
-        output = JSON.parse(last_response.body)
         expect(output.count).to eq 4
       end
     end
-
-    # context 'when that id does not exist' do
-    #   it 'displays an error message' do
-    #     pending
-    #   end
-    # end
   end
 end

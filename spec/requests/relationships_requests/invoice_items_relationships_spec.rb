@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "/invoice_items/:id" do
   include Rack::Test::Methods
+  include_context 'standard output'
 
   def app
     SalesEngineWeb::Server
@@ -21,7 +22,6 @@ describe "/invoice_items/:id" do
     it 'returns the associated invoice' do
 
       get "/invoice_items/#{inv_item1.id}/invoice"
-      output = JSON.parse(last_response.body)
       expect(output['id']).to eq inv_item1.invoice_id
     end
   end
@@ -29,7 +29,6 @@ describe "/invoice_items/:id" do
   describe '/item' do
     it 'returns the associated item' do
       get "/invoice_items/#{inv_item1.id}/item"
-      output = JSON.parse(last_response.body)
       expect(output['id']).to eq inv_item1.item_id
     end
   end

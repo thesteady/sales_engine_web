@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "/customers/:id" do
   include Rack::Test::Methods
+  include_context 'standard output'
 
   def app
     SalesEngineWeb::Server
@@ -23,7 +24,6 @@ describe "/customers/:id" do
     it 'returns a collection of invoices associated with the customer' do
       invoice1 && invoice2
       get "/customers/#{customer1.id}/invoices"
-      output = JSON.parse(last_response.body)
       expect(output.count).to eq 2
     end
   end
@@ -32,7 +32,6 @@ describe "/customers/:id" do
     it 'returns a collection of transactions associated with the customer' do
       transaction1 && transaction2
       get "/customers/#{customer1.id}/transactions"
-      output = JSON.parse(last_response.body)
       expect(output.count).to eq 2
     end
   end

@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "/transactions/:id" do
   include Rack::Test::Methods
+  include_context 'standard output'
 
   def app
     SalesEngineWeb::Server
@@ -19,7 +20,6 @@ describe "/transactions/:id" do
   describe '/invoice' do
     it 'returns the associated invoice' do
       get "/transactions/#{transaction1.id}/invoice"
-      output = JSON.parse(last_response.body)
       expect(output['id']).to eq transaction1.invoice_id
       end
     end

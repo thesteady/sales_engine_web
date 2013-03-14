@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "/invoices/:id" do
   include Rack::Test::Methods
+  include_context 'standard output'
 
   def app
     SalesEngineWeb::Server
@@ -24,7 +25,6 @@ describe "/invoices/:id" do
   describe '/transactions' do
     it 'returns a collection of associated transactions' do
       get "/invoices/#{invoice1.id}/transactions"
-      output = JSON.parse(last_response.body)
       expect(output.count).to eq 2
     end
   end
@@ -33,7 +33,6 @@ describe "/invoices/:id" do
     it 'returns a collection of associated invoice items' do
       item1 && inv_item1 && inv_item2
       get "/invoices/#{invoice1.id}/invoice_items"
-      output = JSON.parse(last_response.body)
       expect(output.count).to eq 2
     end
   end
@@ -42,7 +41,6 @@ describe "/invoices/:id" do
     it 'returns a collection of associated items' do
       inv_item1
       get "/invoices/#{invoice1.id}/items"
-      output = JSON.parse(last_response.body)
       expect(output.count).to eq 1
     end
   end
@@ -50,7 +48,6 @@ describe "/invoices/:id" do
   describe '/customer' do
     it 'returns the associated customer' do
       get "/invoices/#{invoice1.id}/customer"
-      output = JSON.parse(last_response.body)
       expect(output['id']).to eq invoice1.customer_id
     end
   end
@@ -58,7 +55,6 @@ describe "/invoices/:id" do
   describe '/merchant' do
     it 'returns the associate merchant' do
       get "/invoices/#{invoice1.id}/merchant"
-      output = JSON.parse(last_response.body)
       expect(output['id']).to eq invoice1.merchant_id
     end
   end

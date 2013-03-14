@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "/invoice_items/" do
   include Rack::Test::Methods
+  include_context 'standard output'
 
   def app
     SalesEngineWeb::Server
@@ -24,7 +25,6 @@ describe "/invoice_items/" do
     context 'given an id' do
       it 'returns the invoice item with that id' do
        get "invoice_items/find?id=#{inv_item1.id}"
-       output = JSON.parse(last_response.body)
        expect(output['id']).to eq inv_item1.id
       end
     end
@@ -32,7 +32,6 @@ describe "/invoice_items/" do
     context 'given an item id' do
       it 'returns an invoice item with that item id' do
         get "/invoice_items/find?item_id=#{inv_item1.item_id}"
-        output = JSON.parse(last_response.body)
         expect(output['item_id']).to eq inv_item1.item_id
       end
     end
@@ -40,31 +39,15 @@ describe "/invoice_items/" do
     context 'given an invoice id' do
       it 'returns an invoice item with that invoice id' do
         get "/invoice_items/find?invoice_id=#{inv_item1.invoice_id}"
-        output = JSON.parse(last_response.body)
         expect(output['invoice_id']).to eq inv_item1.invoice_id
       end
     end
-
-    # context 'given a quantity' do
-    #   it 'returns an invoice item with that quantity' do
-    #     get "/invoice_items/find?quantity=#{inv_item1.quantity}"
-    #     output = JSON.parse(last_response.body)
-    #     expect(output['quantity']).to eq inv_item1.quantity
-    #   end
-    # end
-
-  #   context 'given a unit price' do
-  #     it 'returns an invoice item with that unit price' do
-  #       pending
-  #     end
-  #   end
   end
 
   describe '/invoice_items/find_all' do
     context 'given an item id' do
       it 'returns all invoice items with that item id' do
         get "/invoice_items/find_all?item_id=#{inv_item1.item_id}"
-        output = JSON.parse(last_response.body)
         expect(output.count).to eq 2
       end
     end
@@ -72,29 +55,14 @@ describe "/invoice_items/" do
     context 'given an invoice id' do
       it 'returns all invoice items with that invoice id' do
         get "/invoice_items/find_all?invoice_id=#{inv_item1.invoice_id}"
-        output = JSON.parse(last_response.body)
         expect(output.count).to eq 2
       end
     end
-
-    # context 'given a quantity' do
-    #   it 'returns all invoice items with that quantity' do
-    #     pending
-    #   end
-
-    # end
-
-    # context 'given a unit price' do
-    #   it 'returns all invoice items with that unit price' do
-    #     pending
-    #   end
-    # end
   end
 
   describe '/invoice_items/random' do
     it 'returns a random invoice item instance' do
       get '/invoice_items/random'
-      output = JSON.parse(last_response.body)
       expect( [ inv_item1.id, inv_item2.id ] ).to include( output['id'] )
     end
   end
