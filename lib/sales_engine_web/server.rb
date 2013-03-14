@@ -113,10 +113,8 @@ module SalesEngineWeb
     get '/items/find_all' do
       if params[:name]
         items = Item.find_all_by_name(params[:name])
-      elsif params[:description]
+      else params[:description]
         items = Item.find_all_by_description(params[:description])
-      else #params[:merchant_id]
-        items = Item.find_all_by_merchant_id(params[:merchant_id])
       end
       body items.to_json
     end
