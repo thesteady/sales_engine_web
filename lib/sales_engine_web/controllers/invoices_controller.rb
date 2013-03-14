@@ -30,5 +30,28 @@ module SalesEngineWeb
       transacts = Transaction.find_all_by_invoice_id(id)
       Response.new(:body => transacts.to_json)
     end
+
+    def self.customer(id)
+      invoice = Invoice.find(id)
+      customer = Customer.find(invoice.customer_id)
+      Response.new(:body => customer.to_json)
+    end
+
+    def self.merchant(id)
+      invoice = Invoice.find(id)
+      merchant = Merchant.find(invoice.merchant_id)
+      Response.new(:body => merchant.to_json)
+   end
+
+    def self.invoice_items(id)
+      inv_items = InvoiceItem.find_all_by_invoice_id(id)
+      Response.new(:body => inv_items.to_json)
+    end
+
+    def self.items(id)
+      inv_items = InvoiceItem.find_all_by_invoice_id(id)
+      items = inv_items.collect {|inv_item| Item.find(inv_item.item_id)}
+      Response.new(:body => items.to_json)
+    end
   end
 end

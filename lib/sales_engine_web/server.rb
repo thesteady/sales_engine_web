@@ -45,26 +45,19 @@ module SalesEngineWeb
     end
 
     get '/invoices/:id/customer' do
-     invoice = Invoice.find(params[:id])
-     customer = Customer.find(invoice.customer_id)
-     body customer.to_json
+     respond_with InvoicesController.customer(params[:id])
     end
 
     get '/invoices/:id/merchant' do
-     invoice = Invoice.find(params[:id])
-     merchant = Merchant.find(invoice.merchant_id)
-     body merchant.to_json
+     respond_with InvoicesController.merchant(params[:id])
     end
 
     get '/invoices/:id/invoice_items' do
-      inv_items = InvoiceItem.find_all_by_invoice_id(params[:id])
-      body inv_items.to_json
+      respond_with InvoicesController.invoice_items(params[:id])
     end
 
     get '/invoices/:id/items' do
-      inv_items = InvoiceItem.find_all_by_invoice_id(params[:id])
-      items = inv_items.collect {|inv_item| Item.find(inv_item.item_id)}
-      body items.to_json
+      respond_with InvoicesController.items(params[:id])
     end
 
 ############## CUSTOMERS ##############
