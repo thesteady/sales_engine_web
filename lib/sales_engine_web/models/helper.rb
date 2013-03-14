@@ -4,21 +4,35 @@ module SalesEngineWeb
     def has_many(things)
       define_method things do
         things_class = SalesEngineWeb.const_get(things.to_s[0..-2].capitalize)
-        method_name = "find_all_by_#{self.class.to_s.split('::').last.downcase}_id"
-        things_class.send(method_name, id)
+        methodname="find_all_by_#{self.class.to_s.split('::').last.downcase}_id"
+        things_class.send(methodname, id)
       end
     end
 
-    def has_one(thing)
-      define_method thing do
-        thing_class = SalesEngineWeb.const_get(thing.to_s[0..-1].capitalize)
-        method_name = "find_by_#{self.to_s.split('::').last.downcase}_id"
-        thing_class.send(method_name, id)
-      end
-    end
+    # def has_one(thing)
+    #   define_method thing do
+    #     thing_class = SalesEngineWeb.const_get(thing.to_s.capitalize)
+    #     method_name = "find_by_#{self.to_s.split('::').last.downcase}_id"
+    #     thing_class.send(method_name, id)
+    #   end
+    # end
 
     def create(params)
        self.new(params).save
     end
+
+    # def add(subject)
+    #   table.insert(subject.to_hash)
+    # end
+
+    # def random
+    #   result = table.to_a.sample
+    #   self.new(result) if result
+    # end
+
+    # def find(id)
+    #   result = table.where(:id => id.to_i).first
+    #   new(result) if result
+    # end
   end
 end

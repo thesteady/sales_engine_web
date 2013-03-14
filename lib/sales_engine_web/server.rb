@@ -1,34 +1,30 @@
 module SalesEngineWeb
   class Server < Sinatra::Base
 
+    def respond_with(response)
+      status(response.status)
+      body(response.body)
+    end
 ################### MERCHANTS ##################
+    get '/merchants/random' do
+      # Merchant.random.to_json
+      respond_with MerchantsController.random
+    end
+
     get '/merchants/find' do
-      if params[:id]
-        merchant = Merchant.find(params[:id])
-      else
-        merchant = Merchant.find_by_name(params[:name])
-      end
-      body merchant.to_json
+      respond_with MerchantsController.find(params)
     end
 
     get '/merchants/find_all' do
-      # if params[:name]
-      merchants = Merchant.find_all_by_name(params[:name])
-      body merchants.to_json
-    end
-
-    get '/merchants/random' do
-      Merchant.random.to_json
+      respond_with MerchantsController.find_all(params[:name])
     end
 
     get '/merchants/:id/items' do
-      items = Merchant.find(params[:id]).items
-      body items.to_json
+      respond_with MerchantsController.find_items(params[:id])
     end
 
     get '/merchants/:id/invoices' do
-      invoices = Merchant.find(params[:id]).invoices
-      body invoices.to_json
+      respond_with MerchantsController.find_invoices(params[:id])
     end
 
 
@@ -119,12 +115,6 @@ module SalesEngineWeb
     end
 
     get '/customers/:id/transactions' do
-      # customer = Customer.find(params[:id])
-      # invoices = Invoice.find_all_by_customer_id(customer.id)
-      # transacts = invoices.collect do |invoice|
-      #   Transaction.find_all_by_invoice_id(invoice.id)
-      # end
-      # body transacts.to_json
       transacts = Customer.find(params[:id]).transactions
       body transacts.to_json
     end

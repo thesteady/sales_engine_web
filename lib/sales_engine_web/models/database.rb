@@ -2,7 +2,9 @@ module SalesEngineWeb
   class Database
 
     def self.database
-      @database ||= Sequel.sqlite("./db/sales_engine_web_#{ environment }.sqlite3")
+      @database ||= Sequel.sqlite(
+                          "./db/sales_engine_web_#{environment}.sqlite3"
+                          )
     end
 
     def self.destroy

@@ -57,7 +57,7 @@ module SalesEngineWeb
 
     def self.find_all_by_customer_id(customer_id)
       invoices = Invoice.find_all_by_customer_id(customer_id)
-      invoices.collect {|invoice| Transaction.find_all_by_invoice_id(invoice.id)}
+      invoices.collect {|invc| Transaction.find_all_by_invoice_id(invc.id)}
     end
 
     def self.random

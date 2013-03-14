@@ -29,8 +29,12 @@ module SalesEngineWeb
       {id: id, first_name: first_name, last_name: last_name}.to_json
     end
 
+    # def self.table
+    #    Database.customers
+    # end
+
     def self.customers
-       Database.customers
+      Database.customers
     end
 
     def self.find(id)
@@ -39,12 +43,14 @@ module SalesEngineWeb
     end
 
     def self.find_by_first_name(first_name)
-      result = customers.limit(1).where(Sequel.ilike(:first_name, "%#{first_name}%")).first
+      result = customers.limit(1).where(
+                            Sequel.ilike(:first_name, "%#{first_name}%")).first
       new(result) if result
     end
 
     def self.find_by_last_name(last_name)
-      result = customers.limit(1).where(Sequel.ilike(:last_name, "%#{last_name}%")).first
+      result = customers.limit(1).where(
+                              Sequel.ilike(:last_name, "%#{last_name}%")).first
       new(result) if result
     end
 
