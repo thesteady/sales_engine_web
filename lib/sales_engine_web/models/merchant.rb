@@ -4,13 +4,14 @@ module SalesEngineWeb
   class Merchant
     attr_reader :id, :name
 
+    extend Helper
+
+    has_many :invoices
+    has_many :items
+
     def initialize(params)
       @id = params[:id]
       @name = params[:name]
-    end
-
-    def self.create(params)
-      Merchant.new(params).save
     end
 
     def save

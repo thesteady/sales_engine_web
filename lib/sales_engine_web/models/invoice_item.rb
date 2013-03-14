@@ -2,16 +2,14 @@ module SalesEngineWeb
   class InvoiceItem
     attr_reader :id, :item_id, :invoice_id, :quantity, :unit_price
 
+    extend Helper
+
     def initialize(params)
       @id = params[:id]
       @invoice_id = params[:invoice_id]
       @item_id = params[:item_id]
       @unit_price = params[:unit_price]
       @quantity = params[:quantity]
-    end
-
-    def self.create(params)
-      InvoiceItem.new(params).save
     end
 
     def save

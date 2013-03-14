@@ -22,14 +22,12 @@ module SalesEngineWeb
     end
 
     get '/merchants/:id/items' do
-      merchant = Merchant.find(params[:id])
-      items = Item.find_all_by_merchant_id(merchant.id)
+      items = Merchant.find(params[:id]).items
       body items.to_json
     end
 
     get '/merchants/:id/invoices' do
-      merchant = Merchant.find(params[:id])
-      invoices = Invoice.find_all_by_merchant_id(merchant.id)
+      invoices = Merchant.find(params[:id]).invoices
       body invoices.to_json
     end
 
@@ -79,6 +77,7 @@ module SalesEngineWeb
 
     get '/invoices/:id/invoice_items' do
       inv_items = InvoiceItem.find_all_by_invoice_id(params[:id])
+      # inv_items = Invoice.find(params[:id]).invoice_items
       body inv_items.to_json
     end
 
@@ -115,17 +114,18 @@ module SalesEngineWeb
     end
 
     get '/customers/:id/invoices' do
-      customer = Customer.find(params[:id])
-      invoices = Invoice.find_all_by_customer_id(customer.id)
+      invoices = Customer.find(params[:id]).invoices
       body invoices.to_json
     end
 
     get '/customers/:id/transactions' do
-      customer = Customer.find(params[:id])
-      invoices = Invoice.find_all_by_customer_id(customer.id)
-      transacts = invoices.collect do |invoice|
-        Transaction.find_all_by_invoice_id(invoice.id)
-      end
+      # customer = Customer.find(params[:id])
+      # invoices = Invoice.find_all_by_customer_id(customer.id)
+      # transacts = invoices.collect do |invoice|
+      #   Transaction.find_all_by_invoice_id(invoice.id)
+      # end
+      # body transacts.to_json
+      transacts = Customer.find(params[:id]).transactions
       body transacts.to_json
     end
 

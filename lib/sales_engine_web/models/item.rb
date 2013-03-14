@@ -2,16 +2,14 @@ module SalesEngineWeb
   class Item
     attr_reader :id, :name, :description, :unit_price, :merchant_id
 
+    extend Helper
+
     def initialize(params)
       @id = params[:id]
       @name = params[:name]
       @description = params[:description]
       @unit_price = params[:unit_price]
       @merchant_id = params[:merchant_id]
-    end
-
-    def self.create(params)
-      Item.new(params).save
     end
 
     def save
@@ -52,7 +50,9 @@ module SalesEngineWeb
     end
 
     def self.find_by_description(description)
-      result = items.limit(1).where(Sequel.ilike(:description, "%#{description}%")).first
+      result = items.limit(1).where(
+                                Sequel.ilike(:description, "%#{description}%")
+                                ).first
       new(result) if result
     end
 
