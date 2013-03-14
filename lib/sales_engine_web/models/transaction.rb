@@ -18,10 +18,6 @@ module SalesEngineWeb
       self
     end
 
-    def self.add(transaction)
-      transactions.insert(transaction.to_hash)
-    end
-
     def to_hash
       {
         id: id, invoice_id: invoice_id, credit_card_number: credit_card_number,
@@ -36,33 +32,23 @@ module SalesEngineWeb
       }.to_json
     end
 
-    def self.transactions
+    def self.table
        Database.transactions
     end
 
-    def self.find(id)
-      result = transactions.limit(1).where(:id => id.to_i).first
-      new(result) if result
-    end
-
     def self.find_by_invoice_id(invoice_id)
-      result = transactions.limit(1).where(invoice_id: invoice_id).first
+      result = table.limit(1).where(invoice_id: invoice_id).first
       new(result) if result
     end
 
     def self.find_all_by_invoice_id(invoice_id)
-      results = transactions.where(invoice_id: invoice_id.to_i).to_a
+      results = table.where(invoice_id: invoice_id.to_i).to_a
       results.collect{|result| new(result)}
     end
 
     def self.find_all_by_customer_id(customer_id)
       invoices = Invoice.find_all_by_customer_id(customer_id)
       invoices.collect {|invc| Transaction.find_all_by_invoice_id(invc.id)}
-    end
-
-    def self.random
-      result = transactions.to_a.sample
-      new(result) if result
     end
   end
 end

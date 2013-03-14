@@ -17,42 +17,42 @@ module SalesEngineWeb
 
     def self.merchants
       unless tables.include?(:merchants)
-        build_merchants_table
+        build_table(:merchants)
       end
       database[:merchants]
     end
 
     def self.invoices
       unless tables.include?(:invoices)
-        build_invoices_table
+        build_table(:invoices)
       end
       database[:invoices]
     end
 
     def self.customers
       unless tables.include?(:customers)
-        build_customers_table
+        build_table(:customers)
       end
       database[:customers]
     end
 
     def self.items
       unless tables.include?(:items)
-        build_items_table
+        build_table(:items)
       end
       database[:items]
     end
 
     def self.transactions
       unless tables.include?(:transactions)
-        build_transactions_table
+        build_table(:transactions)
       end
       database[:transactions]
     end
 
     def self.invoice_items
       unless tables.include?(:invoice_items)
-        build_invoice_items_table
+        build_table(:invoice_items)
       end
       database[:invoice_items]
     end
@@ -61,27 +61,8 @@ module SalesEngineWeb
       @tables ||= []
     end
 
-    def self.build_merchants_table
-      tables << :merchants
-    end
-
-    def self.build_invoices_table
-      tables << :invoices
-    end
-
-    def self.build_customers_table
-      tables << :customers
-    end
-
-    def self.build_items_table
-      tables << :items
-    end
-
-    def self.build_transactions_table
-      tables << :transactions
-    end
-    def self.build_invoice_items_table
-      tables << :invoice_items
+    def self.build_table(table)
+      tables << table
     end
 
     def self.environment=(input)

@@ -27,7 +27,6 @@ module SalesEngineWeb
       respond_with MerchantsController.find_invoices(params[:id])
     end
 
-
 ########### INVOICES #######################
     get '/invoices/find' do
       if params[:id]

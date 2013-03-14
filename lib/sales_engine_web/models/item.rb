@@ -17,10 +17,6 @@ module SalesEngineWeb
       self
     end
 
-    def self.add(item)
-      items.insert(item.to_hash)
-    end
-
     def to_hash
       {
         id: id, name: name, description: description,
@@ -35,50 +31,40 @@ module SalesEngineWeb
       }.to_json
     end
 
-    def self.items
+    def self.table
        Database.items
     end
 
-    def self.find(id)
-      result = items.limit(1).where(:id => id.to_i).first
-      new(result) if result
-    end
-
     def self.find_by_name(name)
-      result = items.limit(1).where(Sequel.ilike(:name, "%#{name}%")).first
+      result = table.limit(1).where(Sequel.ilike(:name, "%#{name}%")).first
       new(result) if result
     end
 
     def self.find_by_description(description)
-      result = items.limit(1).where(
+      result = table.limit(1).where(
                                 Sequel.ilike(:description, "%#{description}%")
                                 ).first
       new(result) if result
     end
 
     def self.find_by_merchant_id(merchant_id)
-      result = items.limit(1).where(merchant_id: merchant_id).first
+      result = table.limit(1).where(merchant_id: merchant_id).first
       new(result) if result
     end
 
     def self.find_all_by_name(name)
-      results = items.where(Sequel.ilike(:name, "%#{name}")).to_a
+      results = table.where(Sequel.ilike(:name, "%#{name}")).to_a
       results.collect {|result| new(result)}
     end
 
     def self.find_all_by_merchant_id(merchant_id)
-      results = items.where(merchant_id: merchant_id).to_a
+      results = table.where(merchant_id: merchant_id).to_a
       results.collect {|result| new(result)}
     end
 
     def self.find_all_by_description(description)
-      results = items.where(Sequel.ilike(:description, "%#{description}")).to_a
+      results = table.where(Sequel.ilike(:description, "%#{description}")).to_a
       results.collect {|result| new(result)}
-    end
-
-    def self.random
-      result = items.to_a.sample
-      new(result) if result
     end
   end
 end

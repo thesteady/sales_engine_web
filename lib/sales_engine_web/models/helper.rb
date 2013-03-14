@@ -9,30 +9,22 @@ module SalesEngineWeb
       end
     end
 
-    # def has_one(thing)
-    #   define_method thing do
-    #     thing_class = SalesEngineWeb.const_get(thing.to_s.capitalize)
-    #     method_name = "find_by_#{self.to_s.split('::').last.downcase}_id"
-    #     thing_class.send(method_name, id)
-    #   end
-    # end
-
     def create(params)
        self.new(params).save
     end
 
-    # def add(subject)
-    #   table.insert(subject.to_hash)
-    # end
+    def add(subject)
+      table.insert(subject.to_hash)
+    end
 
-    # def random
-    #   result = table.to_a.sample
-    #   self.new(result) if result
-    # end
+    def random
+      result = table.to_a.sample
+      self.new(result) if result
+    end
 
-    # def find(id)
-    #   result = table.where(:id => id.to_i).first
-    #   new(result) if result
-    # end
+    def find(id)
+      result = table.where(:id => id.to_i).first
+      new(result) if result
+    end
   end
 end

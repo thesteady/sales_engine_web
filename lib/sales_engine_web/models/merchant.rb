@@ -19,8 +19,8 @@ module SalesEngineWeb
       self
     end
 
-    def self.add(merchant)
-      merchants.insert(merchant.to_hash)
+     def self.table
+      Database.merchants
     end
 
     def to_hash
@@ -32,31 +32,19 @@ module SalesEngineWeb
       Merchant.new(result) if result
     end
 
-    def self.find(id)
-      find_and_instantiate{ merchants.where(:id => id.to_i).limit(1).first }
-    end
-
     def self.find_by_name(name)
       find_and_instantiate do
-        merchants.limit(1).where(Sequel.ilike(:name, "%#{name}%")).first
+        table.limit(1).where(Sequel.ilike(:name, "%#{name}%")).first
       end
     end
 
     def self.find_all_by_name(name)
-      results = merchants.where(Sequel.ilike(:name, "%#{name}%")).to_a
+      results = table.where(Sequel.ilike(:name, "%#{name}%")).to_a
       results.collect {|result| new(result)}
     end
 
     def to_json(state = nil)
       {:id => id, :name => name}.to_json
-    end
-
-    def self.random
-      find_and_instantiate { merchants.to_a.sample }
-    end
-
-    def self.merchants
-      Database.merchants
     end
   end
 end
