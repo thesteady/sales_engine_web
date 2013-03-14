@@ -31,7 +31,6 @@ module SalesEngineWeb
 
     def self.invoices
        Database.invoices
-       # @invoices ||= []
     end
 
     def self.random

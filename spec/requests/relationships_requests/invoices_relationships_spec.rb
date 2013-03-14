@@ -21,9 +21,7 @@ describe "/invoices/:id" do
   let(:inv_item1) {SalesEngineWeb::InvoiceItem.create(item_id: item1.id, invoice_id: invoice1.id, quantity: 5, unit_price: 399)}
   let(:inv_item2) {SalesEngineWeb::InvoiceItem.create(item_id: item1.id, invoice_id: invoice1.id, quantity: 90, unit_price: 199)}
 
-#DO I NEED TO TEST EACH OF THESE FOR AN id does not exist?
   describe '/transactions' do
-    #context 'given the id exists'
     it 'returns a collection of associated transactions' do
       get "/invoices/#{invoice1.id}/transactions"
       output = JSON.parse(last_response.body)
@@ -42,7 +40,7 @@ describe "/invoices/:id" do
 
   describe '/items' do
     it 'returns a collection of associated items' do
-      pending
+      inv_item1
       get "/invoices/#{invoice1.id}/items"
       output = JSON.parse(last_response.body)
       expect(output.count).to eq 1

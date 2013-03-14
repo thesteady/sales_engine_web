@@ -52,9 +52,7 @@ let(:customer1) {Customer.create(first_name: 'Jerry', last_name: 'Seinfeld')}
         expect(found.id).to eq target.id
         end
       end
-###
-      # describe find by last name partial string
-###
+
       describe '.find_by_last_name(last_name), case insensitive' do
         it 'returns a customer object that matches' do
         target = customer1
@@ -87,14 +85,6 @@ let(:customer1) {Customer.create(first_name: 'Jerry', last_name: 'Seinfeld')}
         Customer.create({first_name: 'Denny', last_name: 'Seinfeld'})
         customer = Customer.random
         expect(customer).to be_kind_of Customer
-      end
-    end
-
-    describe '#invoices' do
-      context "when there are associated invoices" do
-        it "returns a collection" do
-          customer1.invoices
-        end
       end
     end
   end

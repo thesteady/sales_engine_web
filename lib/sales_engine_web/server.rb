@@ -165,6 +165,11 @@ module SalesEngineWeb
       body merchant.to_json
     end
 
+    get '/items/:id/invoice_items' do
+      invoice_item = InvoiceItem.find_all_by_item_id(params[:id])
+      body invoice_item.to_json
+    end
+
 ################# TRANSACTIONS ###############
     get '/transactions/find' do
       if params[:id]
@@ -176,12 +181,8 @@ module SalesEngineWeb
     end
 
     get '/transactions/find_all' do
-      if params[:invoice_id]
-        puts params[:invoice_id].inspect
-        transacts = Transaction.find_all_by_invoice_id(params[:invoice_id])
-      else
-        puts "WHATTTTTT"
-      end
+      # params[:invoice_id]
+      transacts = Transaction.find_all_by_invoice_id(params[:invoice_id])
       body transacts.to_json
     end
 

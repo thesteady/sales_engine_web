@@ -49,10 +49,6 @@ describe "/invoices/" do
         expect( output['merchant_id']).to eq invoice1.merchant_id
       end
     end
-
-    #DO I NEED THIS ONE? since status is not a unique thing?
-    # context "given a status" do
-    # end
   end
 
   describe '/invoices/find_all' do
@@ -71,13 +67,6 @@ describe "/invoices/" do
         get "/invoices/find_all?merchant_id=#{invoice3.merchant_id}"
         output = JSON.parse(last_response.body)
         expect(output.count).to eq 2
-      end
-    end
-
-    context 'given a status' do
-      it "returns all invoices that have that status" do
-        pending
-      #example, all not shipped?
       end
     end
   end
