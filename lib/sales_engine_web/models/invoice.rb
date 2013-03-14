@@ -39,12 +39,14 @@ module SalesEngineWeb
 
     def self.find_all_by_customer_id(customer_id)
       results = table.where(:customer_id =>customer_id.to_i).to_a
-      results.collect {|result| new(result)}
+      ans = results.collect {|result| new(result)}
+      ans.flatten
     end
 
     def self.find_all_by_merchant_id(merchant_id)
       results = table.where(:merchant_id => merchant_id.to_i).to_a
-      results.collect{|result| new(result)}
+      ans = results.collect{|result| new(result)}
+      ans.flatten
     end
   end
 end

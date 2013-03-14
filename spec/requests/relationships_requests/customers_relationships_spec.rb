@@ -35,4 +35,11 @@ describe "/customers/:id" do
       expect(output.count).to eq 2
     end
   end
+
+  # describe '/favorite_merchant' do
+  #   it 'returns the most used merchant for a customer' do
+  #     get "customers/1/favorite_merchant"
+  #     expect(output).to include "Jumpstart Lab"
+  #   end
+  # end
 end

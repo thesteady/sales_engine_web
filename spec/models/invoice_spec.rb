@@ -61,15 +61,13 @@ module SalesEngineWeb
       end
     end
 
-    # describe 'find_all_by_customer_id' do
-    #   it 'returns the associated invoice' do
-    #     target = Invoice.create({:customer_id => 3, :merchant_id => 12})
-    #     found = Invoice.find_all_by_customer_id(target.merchant_id)
-    #     expect(found.id).to eq target.id
-    #     expect(found.customer_id).to eq target.customer_id
-    #     expect(found.merchant_id).to eq target.merchant_id
-    #   end
-    # end
+    describe 'find_all_by_customer_id' do
+      it 'returns all the associated invoices' do
+        target = invoice1
+        found = Invoice.find_all_by_customer_id(target.merchant_id).flatten
+        expect(found.count).to eq 1
+      end
+    end
 
     describe 'find_all_by_merchant_id' do
       it 'returns a collection of invoices' do

@@ -11,4 +11,5 @@ require './lib/sales_engine_web/models/database'
 require './lib/sales_engine_web/models/response'
 require './lib/sales_engine_web/controllers/merchants_controller'
 require './lib/sales_engine_web/controllers/invoices_controller'
+require './lib/sales_engine_web/controllers/customers_controller'
 

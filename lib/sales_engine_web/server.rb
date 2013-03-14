@@ -62,38 +62,23 @@ module SalesEngineWeb
 
 ############## CUSTOMERS ##############
     get '/customers/find' do
-      if params[:id]
-        customer = Customer.find(params[:id])
-      elsif params[:first_name]
-        customer = Customer.find_by_first_name(params[:first_name])
-      else #params[:last_name]
-        customer = Customer.find_by_last_name(params[:last_name])
-      end
-      body customer.to_json
+      respond_with CustomersController.find(params)
     end
 
     get '/customers/find_all' do
-      if params[:first_name]
-        customers = Customer.find_all_by_first_name(params[:first_name])
-      else #params[:last_name]
-        customers = Customer.find_all_by_last_name(params[:last_name])
-      end
-      body customers.to_json
+      respond_with CustomersController.find_all(params)
     end
 
     get '/customers/random' do
-      customer = Customer.random
-      body customer.to_json
+      respond_with CustomersController.random
     end
 
     get '/customers/:id/invoices' do
-      invoices = Customer.find(params[:id]).invoices
-      body invoices.to_json
+      respond_with CustomersController.invoices(params[:id])
     end
 
     get '/customers/:id/transactions' do
-      transacts = Customer.find(params[:id]).transactions
-      body transacts.to_json
+      respond_with CustomersController.transactions(params[:id])
     end
 
 ################## ITEMS ###############
